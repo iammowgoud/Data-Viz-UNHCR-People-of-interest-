@@ -1,0 +1,10 @@
+body {
+  background-color: black;
+}
+#viz {
+  margin-top: 10%;
+}
+
+.dp {
+  cursor: pointer;
+}
