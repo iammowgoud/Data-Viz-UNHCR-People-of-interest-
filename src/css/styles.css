@@ -1,10 +1,46 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+
 body {
   background-color: black;
+  font-family: 'Oswald',
+  sans-serif;
 }
+
 #viz {
   margin-top: 10%;
 }
 
 .dp {
   cursor: pointer;
+}
+
+.year {
+  position: absolute;
+  left: 0;
+  color: rgb(197, 220, 239);
+}
+
+.hide {
+  display: none;
+}
+
+button {
+  background: none;
+  color: rgb(197, 220, 239);
+  font-size: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+button[active] {
+  color: rgb(60, 139, 194);
+  text-decoration: underline;
+}
+
+.filter {
+  text-align: center;
+margin: 40px auto 10px;
+max-width: 500px;
 }

@@ -11,6 +11,8 @@ const CONFIG = {
 
 export class Chart {
 
+    id = null;
+
     data: Data;
     activeData = [];
 
@@ -27,7 +29,8 @@ export class Chart {
     diamaterScale;
     colorScale;
 
-    constructor(data: Data, selectedYear: number, selectedMetric: string) {
+    constructor(id, data: Data, selectedYear: number, selectedMetric: string) {
+        this.id = id;
         this.data = data;
         this.selectedMetric = selectedMetric;
         this.selectedYear = selectedYear;
@@ -59,7 +62,7 @@ export class Chart {
         this.colorScale = d3.scaleLinear()
             .domain([d3.min(this.dataValues), d3.max(this.dataValues)])
             .range([0, 0.1])
-            .interpolate((s) => d3.interpolateRdYlGn);
+            .interpolate((s) => d3.interpolateBlues);
 
         this.diamaterScale = d3.scaleLinear()
             .domain([0, d3.max(this.dataValues)])
@@ -81,6 +84,7 @@ export class Chart {
 
             // Main SVG
             .append("svg")
+            .attr("id", this.id)
             .attr("width", this.width + CONFIG.margin.left + CONFIG.margin.right)
             .attr("height", this.height + CONFIG.margin.top + CONFIG.margin.bottom)
 
@@ -111,11 +115,21 @@ export class Chart {
                 return this.diamaterScale(d[this.selectedMetric]) / 2;
             })
             .delay((d, i) => {
-                return i * 20;
+                return i * 70;
             })
             .duration(1000)
             .ease(d3.easeBounceOut);
 
+        d3.select("#viz")
+            .insert("h1", "#" + this.id)
+            .classed("year", true)
+            .classed(this.id, true)
+            .data([this.selectedYear])
+            .text((d) => {
+                return d;
+            })
+            .enter();
+        
         this.tooltip();
 
     }
@@ -131,7 +145,7 @@ export class Chart {
 
         let tempColor;
         let selectedMetric = this.selectedMetric;
-        d3.select("#viz")
+        d3.select("#" + this.id)
             .selectAll("circle")
             .on("mouseenter", function (d) {
                 tooltip.transition().duration(200)
@@ -162,28 +176,38 @@ export class Chart {
     }
 
     changeYear(year) {
+        // console.log(year)
         this.selectedYear = year;
         this.init();
 
-        d3.select("#viz")
+        d3.select("#" + this.id)
             .selectAll("circle")
             .data(this.sortedData)
             .attr("r", (d) => {
                 return this.diamaterScale(d[this.selectedMetric]) / 2;
+            })
+            .enter();
+
+
+        d3.select("." + this.id)
+            .data([this.selectedYear])
+            .text((d) => {
+                return d;
             })
             .enter();
     }
 
     changeMetric(metric) {
+        console.log(metric);
         this.selectedMetric = metric;
         this.init();
-console.log(metric)
-        d3.select("#viz")
+        d3.select("#" + this.id)
             .selectAll("circle")
             .data(this.sortedData)
             .attr("r", (d) => {
                 return this.diamaterScale(d[this.selectedMetric]) / 2;
             })
             .enter();
+        this.tooltip();
     }
 }

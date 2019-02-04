@@ -15,13 +15,14 @@
         <div id="viz"></div>
     </div>
 
-    <button data-action="prev">Prev</button>
-    <button data-action="next">Next</button>
+    <button data-action="prev" class="hide">Prev</button>
+    <button data-action="next" class="hide">Next</button>
 
-<button data-action="change-metric" data-value="Refugees">Refugees</button>
-<button data-action="change-metric" data-value="Internally displaced">Internally displaced</button>
-<button data-action="change-metric" data-value="Asylum seekers">Asylum seekers</button>
-
+    <div class="filter">
+        <button data-action="change-metric" data-value="Refugees" active="true">Refugees</button>
+        <button data-action="change-metric" data-value="Internally displaced">Internally displaced</button>
+        <button data-action="change-metric" data-value="Asylum seekers">Asylum seekers</button>
+    </div>
 
     <!-- <script src="js/libraries/jquery/jquery.min.js"></script>
     <script src="js/libraries/bootstrap/bootstrap.min.js"></script> -->
